@@ -29,16 +29,13 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
 
-          # Checkout the gh-pages branch
-          git checkout gh-pages
-
           # Remove old files
           git rm -rf .
 
-          # Copy generated static files
-          cp -r /public
+          # Copy generated static files from /public to root
+          cp -r public/* .
 
-          # Commit and push changes
+          # Commit and push changes to the main branch
           git add .
           git commit -m "Deploy static files to GitHub Pages"
           git push origin main
