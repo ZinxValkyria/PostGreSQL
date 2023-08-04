@@ -1,17 +1,20 @@
 const express = require('express');
 const { Pool } = require('pg');
 const bodyParser = require('body-parser');
+require('dotenv').config();
+
+
 
 const app = express();
 const port = 3000;
 
 // Replace with your PostgreSQL connection details
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'postgres',
-  password: 'magics',
-  port: 5432, // Default PostgreSQL port
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 app.use(bodyParser.json());
 app.use(express.static('public')); // This line serves static files from the 'public' folder
