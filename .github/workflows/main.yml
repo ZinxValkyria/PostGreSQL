@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20.5.0'
+          node-version: '14.x'
 
       - name: Install dependencies
         run: npm install
@@ -29,11 +29,20 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
 
-          # Remove old files
+          # Create a temporary directory
+          mkdir temp
+
+          # Copy generated static files from /public to temp directory
+          cp -r public/* temp/
+
+          # Remove old files from the root directory
           git rm -rf .
 
-          # Copy generated static files from /public to root
-          cp -r public/* .
+          # Move files from temp directory to root
+          mv temp/* .
+
+          # Clean up - remove the temporary directory
+          rm -rf temp
 
           # Commit and push changes to the main branch
           git add .
