@@ -2,7 +2,7 @@ name: Copy files to remote server
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   copy-files:
     runs-on: ubuntu-latest
