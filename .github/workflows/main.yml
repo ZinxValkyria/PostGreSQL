@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app
+        run: npm run build   # Replace 'build' with your build command
+
+      - name: Deploy to GitHub Pages
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+
+          # Create a temporary directory
+          mkdir temp
+
+          # Copy generated static files from /public to temp directory
+          cp -r public/* temp/
+
+          # Remove old files from the root directory
+          git rm -rf .
+
+          # Move files from temp directory to root
+          mv temp/* .
+
+          # Clean up - remove the temporary directory
+          rm -rf temp
+
+          # Commit and push changes to the main branch
+          git add .
+          git commit -m "Deploy static files to GitHub Pages"
+          git push origin main
