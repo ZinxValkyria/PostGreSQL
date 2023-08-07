@@ -2,11 +2,14 @@ const express = require('express');
 const { Pool } = require('pg');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-
-
-
 const app = express();
 const port = 3000;
+
+
+app.use((req, res, next) => {
+  console.log('Received request:', req.method, req.url, req.body);
+  next();
+});
 
 // Replace with your PostgreSQL connection details
 const pool = new Pool({
@@ -19,7 +22,7 @@ const pool = new Pool({
 app.use(bodyParser.json());
 app.use(express.static('public')); // This line serves static files from the 'public' folder
 
-
+pool.connect();
 
 // Route to get a specific user by ID
 
@@ -87,11 +90,6 @@ app.delete('/api/users/:id', (req, res) => {
       res.json({ message: 'User deleted successfully' });
     }
   });
-});
-
-app.use((req, res, next) => {
-  console.log('Received request:', req.method, req.url, req.body);
-  next();
 });
 
 // Start the server

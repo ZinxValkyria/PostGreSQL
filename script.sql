@@ -1,5 +1,7 @@
-DROP TABLE users;
+-- Drop the existing "users" table if it already exists (optional, use it if you want to start fresh)
+DROP TABLE IF EXISTS users;
 
+-- Create the "users" table
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(50) NOT NULL,
@@ -7,10 +9,13 @@ CREATE TABLE users (
   age INTEGER NOT NULL
 );
 
-
-
-INSERT INTO users (id, username, email, age)
+-- Insert data for characters from "The Matrix" movie
+INSERT INTO users (username, email, age)
 VALUES
-    (1, 'JohnDoe', 'john.doe@example.com', 30),
-    (2, 'JaneSmith', 'jane.smith@example.com', 25),
-    (3, 'MikeJohnson', 'mike.johnson@example.com', 40);
+    ('Neo', 'neo@thematrix.com', 30),
+    ('Trinity', 'trinity@thematrix.com', 28),
+    ('Morpheus', 'morpheus@thematrix.com', 45);
+    ('Agent Smith', 'smith@thematrix.com', 35),
+    ('Cypher', 'cypher@thematrix.com', 38),
+    ('Niobe', 'niobe@thematrix.com', 32),
+    ('Seraph', 'seraph@thematrix.com', 40);
